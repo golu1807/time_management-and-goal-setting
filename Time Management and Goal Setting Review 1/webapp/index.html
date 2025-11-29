@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TimeTrack Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo">TimeTrack</div>
+            <nav class="navigation">
+                <a href="#dashboard" class="nav-link">Dashboard</a>
+                <a href="#goals" class="nav-link">Goals</a>
+                <a href="#timetracking" class="nav-link">Time Tracking</a>
+                <a href="#goalsettings" class="nav-link">Goal Settings</a>
+                <a href="#usermanagement" class="nav-link">User Management</a>
+                <a href="#analytics" class="nav-link">Analytics</a>
+                <a href="#adminpanel" class="nav-link" id="admin-link" hidden>Admin Panel</a>
+            </nav>
+        </aside>
+
+        <div class="main-wrapper">
+            <header class="topbar">
+                <h1 class="topbar-title" id="main-title">Dashboard</h1>
+                <div class="topbar-actions">
+                    <button id="login-btn" class="cta-button">Login</button>
+                    <div id="user-profile" class="profile-menu" hidden>
+                        <button class="profile-btn" id="profile-avatar"></button>
+                        <div class="profile-dropdown"><button id="logout-btn">Logout</button></div>
+                    </div>
+                </div>
+            </header>
+            
+            <main class="main-content">
+                <section id="dashboard" class="content-section">
+                    <h2>Dashboard</h2>
+                    <div class="kpi-grid">
+                        <div class="card kpi-card"><h3>Total Goals</h3><p>12</p></div>
+                        <div class="card kpi-card"><h3>This Week's Time</h3><p>25h 30m</p></div>
+                    </div>
+                </section>
+
+                <!-- Restored Goals Section -->
+                <section id="goals" class="content-section">
+                    <h2>Goals</h2>
+                    <div class="goal-grid">
+                        <div class="card goal-card">
+                            <h3>Finish Project Report</h3>
+                            <span class="tag work">Work</span>
+                            <progress value="70" max="100"></progress>
+                            <div class="goal-footer"><p>Deadline: 2 days</p><div class="actions"><button>✏️</button><button>🗑️</button></div></div>
+                        </div>
+                        <div class="card goal-card">
+                            <h3>Learn Advanced Java</h3>
+                             <span class="tag personal">Personal</span>
+                            <progress value="40" max="100"></progress>
+                            <div class="goal-footer"><p>Deadline: 3 weeks</p><div class="actions"><button>✏️</button><button>🗑️</button></div></div>
+                        </div>
+                    </div>
+                    <button class="fab">+</button>
+                </section>
+
+                <section id="timetracking" class="content-section">
+                    <h2>Time Tracking</h2>
+                    <div class="card timer-panel">
+                        <div class="timer-display">25:00</div>
+                        <div class="timer-goal-selector">
+                            <select><option>Project: TimeTrack UI</option></select>
+                        </div>
+                        <div class="timer-controls">
+                            <button class="timer-btn start">Start</button>
+                            <button class="timer-btn pause">Pause</button>
+                            <button class="timer-btn stop">Stop</button>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="goalsettings" class="content-section">
+                    <h2>Goal Settings</h2>
+                    <div class="card">
+                        <h3>Add New Goal Type</h3>
+                        <form class="form-grid">
+                            <input type="text" placeholder="Type Name">
+                            <select><option>Unit</option></select>
+                            <input type="color" class="color-picker">
+                            <button type="submit" class="cta-button">Add</button>
+                        </form>
+                    </div>
+                </section>
+
+                <section id="usermanagement" class="content-section">
+                    <h2>User Management</h2>
+                    <div class="card">
+                        <div class="table-toolbar"><input type="search" placeholder="Search users..."></div>
+                        <table class="data-table">
+                            <thead><tr><th>Avatar</th><th>Name</th><th>Email</th><th>Role</th><th>Actions</th></tr></thead>
+                            <tbody>
+                                <tr>
+                                    <td><div class="avatar">AD</div></td>
+                                    <td>Admin User</td>
+                                    <td>admin@test.com</td>
+                                    <td>ADMIN</td>
+                                    <td class="actions"><button class="btn-sm">Lock</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Restored Analytics Section -->
+                <section id="analytics" class="content-section">
+                    <h2>Analytics</h2>
+                     <div class="kpi-grid">
+                        <div class="card kpi-card"><h3>Active Users</h3><p>78</p></div>
+                        <div class="card kpi-card"><h3>Avg. Session</h3><p>32m</p></div>
+                    </div>
+                    <div class="card">
+                        <h3>Activity Over Time</h3>
+                        <canvas id="analytics-activity-chart"></canvas>
+                    </div>
+                </section>
+                
+                <section id="adminpanel" class="content-section">
+                    <h2>Admin Panel</h2>
+                    <div class="card"><p>Welcome to the admin panel.</p></div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+<div id="auth-modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="auth-tabs" role="tablist">
+                <button id="login-tab" role="tab" aria-selected="true" class="auth-tab-btn active">Login</button>
+                <button id="signup-tab" role="tab" aria-selected="false" class="auth-tab-btn">Signup</button>
+            </div>
+            <button class="close-modal" aria-label="Close modal">&times;</button>
+        </div>
+        <div id="auth-error" role="alert" class="auth-error"></div>
+
+        <div id="login-view" role="tabpanel" aria-labelledby="login-tab">
+            <form id="login-form">
+                <input type="email" placeholder="Email (admin@test.com)" required>
+                <input type="password" placeholder="Password (password)" required>
+                <button type="submit" class="cta-button">Login</button>
+            </form>
+        </div>
+
+        <div id="signup-view" role="tabpanel" aria-labelledby="signup-tab" hidden>
+            <form id="signup-form">
+                <input type="text" placeholder="Full Name" required>
+                <input type="email" placeholder="Email Address" required>
+                <input type="password" placeholder="Password" required>
+                <button type="submit" class="cta-button">Create Account</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+    <script src="app.js"></script>
+</body>
+</html>
